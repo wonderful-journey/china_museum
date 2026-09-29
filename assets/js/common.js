@@ -7,7 +7,7 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 
 // 全站專題分類：首頁卡片與導覽列共用；ready:false 為籌備中，不出現在導覽列
 const SECTIONS=[
-  {key:"museums",t:"博物館名錄",href:"museums.html",ready:false,d:"全國重點博物館的分布、館別、開放資訊與代表館藏。"},
+  {key:"museums",t:"博物館名錄",href:"museums.html",ready:true,d:"全國重點博物館的分布、館別、開放資訊與代表館藏。"},
   {key:"forbidden",t:"禁止出境展覽文物",href:"forbidden.html",ready:true,d:"國家文物局 2002、2012、2013 年分三批公布，永久禁止出境展覽的一級文物。"},
   {key:"treasures",t:"鎮館之寶",href:"treasures.html",ready:false,d:"各館最具代表性的館藏，依博物館與省份瀏覽。"},
   {key:"dynasty",t:"依朝代瀏覽",href:"dynasty.html",ready:false,d:"從新石器時代到明清，以時間軸串起各時期的重要文物。"},
@@ -21,4 +21,33 @@ const SECTIONS=[
   const links=[{key:"home",t:"首頁",href:"index.html"},...SECTIONS.filter(s=>s.ready)];
   nav.innerHTML=`<a class="brand" href="index.html"><span class="mini" aria-hidden="true">博</span>中國文物博物館</a>
     <div class="navlinks">${links.map(l=>`<a href="${l.href}"${l.key===active?' aria-current="page"':""}>${l.t}</a>`).join("")}</div>`;
+})();
+
+// 文物清單列與詳情卡（頁面需有 #scrim > #card）
+function itemRow(it){return `<button class="item" data-i="${it.id}"><span class="tag ${it.cls}"><b>${it.tagB}</b>${it.tagN}</span><span><span class="nm">${esc(it.name)}</span><br><span class="meta">${esc(it.era)} · ${it.cat}</span></span></button>`;}
+let detailList=[];
+// list 為上一件／下一件的順序；省略時沿用前一次的清單
+function openDetail(it,list){
+  if(list)detailList=list;
+  const idx=detailList.indexOf(it);
+  const mus=it.mus.map(m=>`<a href="museum.html?id=${m}">${MUSEUMS[m].n}</a>（${MUSEUMS[m].p}）`).join("、");
+  const kw=encodeURIComponent(it.name.replace(/[（(].*?[）)]/g,""));
+  $("#card").innerHTML=`<button class="x" id="dClose" aria-label="關閉">×</button>
+   <div class="no ${it.cls}">${it.label}</div>
+   <h2 id="dTitle">${esc(it.name)}</h2>
+   <dl><dt>年代</dt><dd>${esc(it.era)}</dd><dt>類別</dt><dd>${it.cat}</dd><dt>收藏單位</dt><dd>${mus}</dd></dl>
+   <p>${esc(it.desc)}</p>
+   <div class="links"><a href="https://www.google.com/search?tbm=isch&q=${kw}" target="_blank" rel="noopener">查看圖片 ↗</a><a href="https://zh.wikipedia.org/w/index.php?search=${kw}" target="_blank" rel="noopener">維基百科 ↗</a></div>
+   <div class="nav"><button id="dPrev" ${idx<=0?"disabled":""}>← 上一件</button><button id="dNext" ${idx<0||idx>=detailList.length-1?"disabled":""}>下一件 →</button></div>`;
+  $("#scrim").hidden=false;
+  $("#dClose").onclick=closeDetail;
+  $("#dPrev").onclick=()=>idx>0&&openDetail(detailList[idx-1]);
+  $("#dNext").onclick=()=>idx<detailList.length-1&&openDetail(detailList[idx+1]);
+  $("#dClose").focus();
+}
+function closeDetail(){const s=$("#scrim");if(s)s.hidden=true;}
+(function(){
+  const s=$("#scrim"); if(!s)return;
+  s.addEventListener("click",e=>{if(e.target.id==="scrim")closeDetail();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDetail();});
 })();

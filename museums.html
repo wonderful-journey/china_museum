@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>博物館名錄｜中國文物博物館</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="topbar" id="topbar" data-active="museums" aria-label="網站導覽"></nav>
+  <header>
+    <div class="seal" aria-hidden="true"><span>博</span><span>物</span><span>館</span><span>錄</span></div>
+    <div>
+      <h1>博物館名錄</h1>
+      <p class="lede">本站各專題所收錄文物的收藏機構，包含博物館、考古研究機構、圖書館與高校。點選省份篩選，點選機構查看簡介與館藏文物。</p>
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="controls">
+    <div class="group" id="kindG"><span class="lbl">類型</span></div>
+    <div class="group" id="lvG"></div>
+    <input id="q" type="search" placeholder="搜尋機構或城市，例如：故宮、西安" aria-label="搜尋機構或城市">
+  </div>
+
+  <div class="main">
+    <div class="mapbox">
+      <div id="map" role="img" aria-label="中國各省收藏機構數量地圖"></div>
+      <div class="maphint">點省份篩選 · 點圓點進入機構</div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <aside>
+      <div class="ph" id="ph"></div>
+      <div class="plist" id="plist"></div>
+    </aside>
+  </div>
+
+  <footer>
+    <div>「國家一級博物館」依國家文物局公布之第一至五批名單（參考 <a href="https://zh.wikipedia.org/zh-tw/%E5%9B%BD%E5%AE%B6%E4%B8%80%E7%BA%A7%E5%8D%9A%E7%89%A9%E9%A6%86" target="_blank" rel="noopener">維基百科彙整</a>）；部分機構曾更名（例如安徽省博物館今為安徽博物院、秦始皇兵馬俑博物館今為秦始皇帝陵博物院）。圓點大小為該機構在本站收錄的文物數。機構簡介為摘要整理，開放資訊請以館方公告為準。</div>
+  </footer>
+</div>
+
+<script src="assets/vendor/echarts.min.js"></script>
+<script src="assets/vendor/china-geo.js"></script>
+<script src="data/museums.js"></script>
+<script src="data/forbidden.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/topics.js"></script>
+<script src="assets/js/map.js"></script>
+<script src="assets/js/museums.js"></script>
+
+</body>
+</html>
