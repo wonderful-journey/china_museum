@@ -1,36 +1,36 @@
 (function(){
-const KINDS=["博物館","考古機構","圖書館","高校"];
 const IDS=Object.keys(MUSEUMS);
+const GRADES=[[null,"全部"],["lv1","國家一級博物館"],["other","其他收藏機構"]];
 
-const state={kind:null,lv1:false,q:"",prov:null};
+const state={grade:null,hasItems:false,q:"",prov:null};
 const qProv=new URLSearchParams(location.search).get("prov");
 if(qProv&&IDS.some(m=>MUSEUMS[m].p===qProv))state.prov=qProv;
 
+// 有收錄文物者優先，其次依列入批次、館名
+const ORDER=IDS.slice().sort((a,b)=>musCount(b)-musCount(a)||(MUSEUMS[a].b||9)-(MUSEUMS[b].b||9)||MUSEUMS[a].n.localeCompare(MUSEUMS[b].n,"zh-Hant"));
 function filtered(){
   const q=state.q.trim();
-  return IDS.filter(m=>{const x=MUSEUMS[m];
-    return (!state.kind||x.k===state.kind)&&(!state.lv1||x.lv1)&&(!q||x.n.includes(q)||x.p.includes(q)||x.city.includes(q));})
-    .sort((a,b)=>musCount(b)-musCount(a));
+  return ORDER.filter(m=>{const x=MUSEUMS[m];
+    return (!state.grade||(state.grade==="lv1")===!!x.lv)&&(!state.hasItems||musCount(m))&&(!q||x.n.includes(q)||x.p.includes(q)||x.city.includes(q));});
 }
 function byProv(ids){const o={};ids.forEach(m=>{const p=MUSEUMS[m].p;o[p]=(o[p]||0)+1;});return o;}
 
 // stats
 (function(){
   const provs=new Set(IDS.map(m=>MUSEUMS[m].p));
-  const total=Object.values(TOPICS).reduce((n,t)=>n+t.items.length,0);
-  $("#stats").innerHTML=[[IDS.length,"收藏機構"],[IDS.filter(m=>MUSEUMS[m].lv1).length,"國家一級博物館"],[provs.size,"省級行政區"],[total,"件（組）文物已收錄"]]
+  $("#stats").innerHTML=[[IDS.length,"收藏機構"],[IDS.filter(m=>MUSEUMS[m].lv).length,"國家一級博物館"],[provs.size,"省級行政區"],[IDS.filter(musCount).length,"館有本站收錄文物"]]
     .map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
 })();
 
 // controls
 function renderChips(){
-  $("#kindG").innerHTML='<span class="lbl">類型</span>'+[null,...KINDS].map(k=>`<button class="chip" data-k="${k||""}" aria-pressed="${state.kind===k}">${k||"全部"}</button>`).join("");
-  $("#lvG").innerHTML=`<button class="chip" data-lv aria-pressed="${state.lv1}">只看國家一級博物館</button>`;
+  $("#kindG").innerHTML='<span class="lbl">等級</span>'+GRADES.map(([g,t])=>`<button class="chip" data-g="${g||""}" aria-pressed="${state.grade===g}">${t}</button>`).join("");
+  $("#lvG").innerHTML=`<button class="chip" data-has aria-pressed="${state.hasItems}">只看有收錄文物的機構</button>`;
 }
 document.addEventListener("click",e=>{
-  const k=e.target.closest("[data-k]");
-  if(k){state.kind=k.dataset.k||null;update();return;}
-  if(e.target.closest("[data-lv]")){state.lv1=!state.lv1;update();return;}
+  const g=e.target.closest("[data-g]");
+  if(g){state.grade=g.dataset.g||null;update();return;}
+  if(e.target.closest("[data-has]")){state.hasItems=!state.hasItems;update();return;}
   const p=e.target.closest("[data-p]");
   if(p){state.prov=p.dataset.p||null;update();}
 });
@@ -43,18 +43,18 @@ function renderPanel(ids){
     const arr=Object.entries(byProv(ids)).sort((a,b)=>b[1]-a[1]); const max=arr.length?arr[0][1]:1;
     ph.innerHTML=`<div class="crumb">全國總覽</div><h2>${ids.length} 個收藏機構</h2><div class="sub">分布於 ${arr.length} 個省級行政區。點選省份或機構查看細目。</div>`;
     pl.innerHTML=arr.length?`<div class="sect">各省機構數</div>`+arr.map(([p,n])=>`<button class="rank" data-p="${p}"><span>${p}</span><span class="bar" style="width:${Math.max(4,n/max*100)}%"></span><span class="n">${n}</span></button>`).join("")
-      +`<div class="sect">全部機構（依收錄文物數）</div>`+ids.map(museumRow).join("")
-      :`<div class="empty">沒有符合條件的機構。試試清除搜尋字或切換類型。</div>`;
+      +`<div class="sect">全部機構</div>`+ids.map(museumRow).join("")
+      :`<div class="empty">沒有符合條件的機構。試試清除搜尋字或切換篩選。</div>`;
     return;
   }
   const inP=ids.filter(m=>MUSEUMS[m].p===state.prov);
-  ph.innerHTML=`<div class="crumb"><button data-p="">← 全國</button><span>/</span><span>${state.prov}</span></div><h2>${state.prov}</h2><div class="sub">${inP.length} 個收藏機構 · ${inP.filter(m=>MUSEUMS[m].lv1).length} 個國家一級博物館</div>`;
+  ph.innerHTML=`<div class="crumb"><button data-p="">← 全國</button><span>/</span><span>${state.prov}</span></div><h2>${state.prov}</h2><div class="sub">${inP.length} 個收藏機構 · ${inP.filter(m=>MUSEUMS[m].lv).length} 個國家一級博物館</div>`;
   pl.innerHTML=inP.length?inP.map(museumRow).join(""):`<div class="empty">${state.prov}在目前的篩選條件下沒有收藏機構。</div>`;
 }
 
 // map
-const map=chinaMap($("#map"),$("#legend"),{steps:[1,2,3,4,6],
-  tip:{prov:n=>`${n} 個機構`,point:n=>`${n} 件文物已收錄`},
+const map=chinaMap($("#map"),$("#legend"),{steps:[1,3,6,10,20],
+  tip:{prov:n=>`${n} 個機構`,point:n=>n?`${n} 件文物已收錄`:"點選查看機構"},
   onProv:prov=>{state.prov=(state.prov===prov?null:prov);update();},
   onPoint:d=>{location.href="museum.html?id="+d.id;}});
 function update(){

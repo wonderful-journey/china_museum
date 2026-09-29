@@ -7,11 +7,10 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 
 // 全站專題分類：首頁卡片與導覽列共用；ready:false 為籌備中，不出現在導覽列
 const SECTIONS=[
-  {key:"museums",t:"博物館名錄",href:"museums.html",ready:true,d:"全國重點博物館的分布、館別、開放資訊與代表館藏。"},
+  {key:"museums",t:"博物館名錄",href:"museums.html",ready:true,d:"全中國以古代文物為主的國家一級博物館與各專題文物的收藏機構，依地圖與省份瀏覽。"},
   {key:"forbidden",t:"禁止出境展覽文物",href:"forbidden.html",ready:true,d:"國家文物局 2002、2012、2013 年分三批公布，永久禁止出境展覽的一級文物。"},
   {key:"treasures",t:"鎮館之寶",href:"treasures.html",ready:false,d:"各館最具代表性的館藏，依博物館與省份瀏覽。"},
-  {key:"dynasty",t:"依朝代瀏覽",href:"dynasty.html",ready:false,d:"從新石器時代到明清，以時間軸串起各時期的重要文物。"},
-  {key:"overseas",t:"流失海外文物",href:"overseas.html",ready:false,d:"散藏於海外博物館的中國文物，例如昭陵六駿中的颯露紫與拳毛騧。"}
+  {key:"dynasty",t:"依朝代瀏覽",href:"dynasty.html",ready:true,d:"從新石器時代到明清，以時間軸串起各時期的重要文物。"}
 ];
 
 // 頁面放 <nav id="topbar" data-active="key">，載入時自動產生導覽列

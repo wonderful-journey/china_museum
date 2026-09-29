@@ -16,10 +16,12 @@ function byMus(list){const o={};list.forEach(it=>it.mus.forEach(m=>{(o[m]=o[m]||
 
 // stats
 (function(){
-  const provs=new Set(Object.values(MUSEUMS).map(m=>m.p));
+  // 只計入收藏本專題文物的機構
+  const mus=new Set(ITEMS.flatMap(i=>i.mus));
+  const provs=new Set([...mus].map(m=>MUSEUMS[m].p));
   const gg=ITEMS.filter(i=>i.mus.includes("gg")).length;
   const perBatch=[1,2,3].map(b=>ITEMS.filter(i=>i.batch===b).length);
-  $("#stats").innerHTML=[[ITEMS.length,"件（組）文物"],[perBatch.join(" · "),[1,2,3].map(b=>BATCH[b].y).join(" · ")],[Object.keys(MUSEUMS).length,"收藏機構"],[provs.size,"省級行政區"],[gg,"故宮博物院收藏，居首"]]
+  $("#stats").innerHTML=[[ITEMS.length,"件（組）文物"],[perBatch.join(" · "),[1,2,3].map(b=>BATCH[b].y).join(" · ")],[mus.size,"收藏機構"],[provs.size,"省級行政區"],[gg,"故宮博物院收藏，居首"]]
    .map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
 })();
 

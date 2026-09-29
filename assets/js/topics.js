@@ -20,5 +20,13 @@ Object.values(TOPICS).forEach(t=>t.items.forEach(it=>ITEM_INDEX[it.id]=it));
 const MUS_ITEMS={};
 Object.values(TOPICS).forEach(t=>t.items.forEach(it=>it.mus.forEach(m=>(MUS_ITEMS[m]=MUS_ITEMS[m]||[]).push(it))));
 const musCount=m=>(MUS_ITEMS[m]||[]).length;
-// 機構清單列：名稱、一級標記、城市與類型、收錄件數
-function museumRow(m){const x=MUSEUMS[m];return `<a class="mrow" href="museum.html?id=${m}"><span class="nm">${x.n}${x.lv1?'<span class="badge">一級</span>':""}</span><span class="meta">${x.city===x.p?x.p:x.p+" · "+x.city} · ${x.k}</span><span class="n">${musCount(m)} 件</span></a>`;}
+// 國家一級博物館各批次公布年份
+const LV_BATCH={1:2008,2:2012,3:2017,4:2020,5:2024};
+// 機構清單列：名稱、一級標記、所在地與批次（非一級者顯示類型）、收錄件數
+function museumRow(m){const x=MUSEUMS[m],n=musCount(m);
+  const where=x.city===x.p?x.p:x.p+" · "+x.city;
+  return `<a class="mrow" href="museum.html?id=${m}"><span class="nm">${x.n}${x.lv?'<span class="badge">一級</span>':""}</span><span class="meta">${where} · ${x.lv?`第 ${x.b} 批（${LV_BATCH[x.b]}）`:x.k}</span><span class="n">${n?n+" 件":""}</span></a>`;}
+
+// 依年代欄位歸入朝代分期（需先載入 data/periods.js）；無法歸類者為 null
+if(typeof PERIODS!=="undefined")
+  Object.values(ITEM_INDEX).forEach(it=>{const p=PERIODS.find(p=>p.re.test(it.era));it.period=p?p.key:null;});
