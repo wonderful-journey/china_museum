@@ -6,6 +6,9 @@ const counters={1:0,2:0,3:0};
 const ITEMS=FORBIDDEN.map((r,i)=>{counters[r[0]]++;return {id:i,batch:r[0],no:counters[r[0]],cat:r[1],name:r[2],era:r[3],mus:r[4].split("|"),desc:r[5]};});
 
 const state={batch:new Set([1,2,3]),cat:null,q:"",prov:null};
+// 支援 ?prov=北京 直接開啟省份（首頁等其他頁面連入用）
+const qProv=new URLSearchParams(location.search).get("prov");
+if(qProv&&Object.values(MUSEUMS).some(m=>m.p===qProv))state.prov=qProv;
 
 function filtered(){
   const q=state.q.trim().toLowerCase();
