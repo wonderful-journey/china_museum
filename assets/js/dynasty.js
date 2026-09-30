@@ -1,5 +1,5 @@
 (function(){
-const ALL=Object.values(ITEM_INDEX);
+const ALL=UNIQUE_ITEMS;
 // 只顯示本站有收錄文物的時期
 const USED=PERIODS.filter(p=>ALL.some(it=>it.period===p.key));
 
@@ -47,4 +47,6 @@ document.addEventListener("click",e=>{
 $("#q").addEventListener("input",e=>{state.q=e.target.value;update();});
 
 update();
+// 從首頁時間軸連入（#p-tang 等）時捲到該時期；時期區塊是程式產生的，瀏覽器不會自動捲動
+if(/^#p-\w+$/.test(location.hash)){const s=$(location.hash);if(s)s.scrollIntoView();}
 })();

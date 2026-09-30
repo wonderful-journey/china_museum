@@ -21,15 +21,15 @@ page.innerHTML=`
   <div class="crumbs"><a href="museums.html">博物館名錄</a><span>/</span><a href="museums.html?prov=${encodeURIComponent(x.p)}">${x.p}</a></div>
   <header style="grid-template-columns:1fr">
     <div>
-      <h1>${x.n}${x.lv?'<span class="badge" style="font-size:13px;font-family:var(--sans)">國家一級博物館</span>':""}</h1>
+      <h1>${x.n}${gradeBadge(x,true)}</h1>
       <p class="lede">${x.d?esc(x.d):"本站尚未撰寫這間機構的簡介，可由下方連結查看維基百科或地圖。"}</p>
     </div>
   </header>
   <div class="facts">
     <span>所在地 <b>${x.city===x.p?x.p:x.p+" · "+x.city}</b></span>
     <span>類型 <b>${x.k}</b></span>
-    ${x.lv?`<span>列入一級博物館 <b>第 ${x.b} 批（${LV_BATCH[x.b]}）</b></span>`:""}
-    <span>本站收錄 <b>${items.length} 件（組）文物</b></span>
+    ${x.lv?`<span>列入${LV_T[x.lv]}博物館 <b>${batchText(x)}</b></span>`:""}
+    <span>本站收錄 <b>${musCount(id)} 件（組）文物</b></span>
   </div>
   <div class="linkrow">
     <a href="https://zh.wikipedia.org/w/index.php?search=${kw}" target="_blank" rel="noopener">維基百科 ↗</a>
