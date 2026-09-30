@@ -23,7 +23,26 @@ const SECTIONS=[
 })();
 
 // 文物清單列與詳情卡（頁面需有 #scrim > #card）
-function itemRow(it){return `<button class="item" data-i="${it.id}"><span class="tag ${it.cls}"><b>${it.tagB}</b>${it.tagN}</span><span><span class="nm">${esc(it.name)}</span><br><span class="meta">${esc(it.era)} · ${it.cat}</span></span></button>`;}
+function itemRow(it){return `<button class="item" data-i="${it.id}">${imageThumb(it.name)}<span class="tag ${it.cls}"><b>${it.tagB}</b>${it.tagN}</span><span><span class="nm">${esc(it.name)}</span><br><span class="meta">${esc(it.era)} · ${it.cat}</span></span></button>`;}
+// 文物圖片（需載入 data/images.js）；無圖或載入失敗時不顯示
+const imageOf=name=>typeof IMAGES!=="undefined"&&IMAGES[name];
+// 維基共享資源的指定寬度縮圖網址：已是縮圖者換寬度，原檔網址則改為 thumb 路徑
+function thumbUrl(src,w){
+  if(/\/\d+px-[^/]+$/.test(src))return src.replace(/\/\d+px-([^/]+)$/,`/${w}px-$1`);
+  const m=src.match(/^(https:\/\/upload\.wikimedia\.org\/wikipedia\/commons)\/(\w\/\w\w)\/([^/]+)$/);
+  return m?`${m[1]}/thumb/${m[2]}/${m[3]}/${w}px-${m[3]}`:src;
+}
+// 清單縮圖改用維基共享資源的 120px 縮圖，減少下載量；無圖時放同尺寸的空方塊，讓各列對齊
+function imageThumb(name){
+  const im=imageOf(name);
+  return im?`<img class="th" src="${im.th||thumbUrl(im.src,120)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'th'}))">`:`<span class="th" aria-hidden="true"></span>`;
+}
+function imageFigure(name){
+  const im=imageOf(name);
+  if(!im)return "";
+  return `<figure class="pic"><img src="${im.src}" alt="${esc(name)}" onerror="this.parentNode.hidden=true">
+    <figcaption>圖：${esc(im.by)} · ${im.lic} · <a href="${im.page}" target="_blank" rel="noopener">維基共享資源 ↗</a></figcaption></figure>`;
+}
 let detailList=[];
 // list 為上一件／下一件的順序；省略時沿用前一次的清單
 function openDetail(it,list){
@@ -34,6 +53,7 @@ function openDetail(it,list){
   $("#card").innerHTML=`<button class="x" id="dClose" aria-label="關閉">×</button>
    <div class="no ${it.cls}">${it.label}</div>
    <h2 id="dTitle">${esc(it.name)}</h2>
+   ${imageFigure(it.name)}
    <dl><dt>年代</dt><dd>${esc(it.era)}</dd><dt>類別</dt><dd>${it.cat}</dd><dt>收藏單位</dt><dd>${mus}</dd></dl>
    <p>${esc(it.desc)}</p>
    <div class="links"><a href="https://www.google.com/search?tbm=isch&q=${kw}" target="_blank" rel="noopener">查看圖片 ↗</a><a href="https://zh.wikipedia.org/w/index.php?search=${kw}" target="_blank" rel="noopener">維基百科 ↗</a></div>
