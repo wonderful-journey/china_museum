@@ -45,13 +45,22 @@ function renderPanel(ids){
     const arr=Object.entries(byProv(ids)).sort((a,b)=>b[1]-a[1]); const max=arr.length?arr[0][1]:1;
     ph.innerHTML=`<div class="crumb">全國總覽</div><h2>${ids.length} 個收藏機構</h2><div class="sub">分布於 ${arr.length} 個省級行政區。點選省份或機構查看細目。</div>`;
     pl.innerHTML=arr.length?`<div class="sect">各省機構數</div>`+arr.map(([p,n])=>`<button class="rank" data-p="${p}"><span>${p}</span><span class="bar" style="width:${Math.max(4,n/max*100)}%"></span><span class="n">${n}</span></button>`).join("")
-      +`<div class="sect">全部機構</div>`+ids.map(museumRow).join("")
       :`<div class="empty">沒有符合條件的機構。試試清除搜尋字或切換篩選。</div>`;
     return;
   }
   const inP=ids.filter(m=>MUSEUMS[m].p===state.prov);
   ph.innerHTML=`<div class="crumb"><button data-p="">← 全國</button><span>/</span><span>${state.prov}</span></div><h2>${state.prov}</h2><div class="sub">${inP.length} 個收藏機構 · 一級 ${inP.filter(m=>MUSEUMS[m].lv===1).length} · 二級 ${inP.filter(m=>MUSEUMS[m].lv===2).length}</div>`;
   pl.innerHTML=inP.length?inP.map(museumRow).join(""):`<div class="empty">${state.prov}在目前的篩選條件下沒有收藏機構。</div>`;
+}
+
+// 地圖下方的完整清單：依省份分組（機構多的省份在前），套用與地圖相同的篩選
+function renderList(ids){
+  const list=state.prov?ids.filter(m=>MUSEUMS[m].p===state.prov):ids;
+  const groups={};list.forEach(m=>(groups[MUSEUMS[m].p]=groups[MUSEUMS[m].p]||[]).push(m));
+  const arr=Object.entries(groups).sort((a,b)=>b[1].length-a[1].length);
+  $("#dir").innerHTML=`<div class="dirhead"><h2 class="hsect">機構清單</h2><span>${state.prov?state.prov+" · ":""}${list.length} 個機構</span></div>`
+    +(arr.length?arr.map(([p,ms])=>`<div class="dgroup"><h3>${p}<span>${ms.length}</span></h3><div class="dgrid">${ms.map(museumRow).join("")}</div></div>`).join("")
+      :`<div class="empty">沒有符合條件的機構。</div>`);
 }
 
 // map
@@ -63,6 +72,7 @@ function update(){
   renderChips();
   const ids=filtered();
   renderPanel(ids);
+  renderList(ids);
   map.render({provCounts:byProv(ids),sel:state.prov,
     points:ids.map(m=>({name:MUSEUMS[m].n,value:[...MUSEUMS[m].c,musCount(m)],prov:MUSEUMS[m].p,id:m}))});
 }

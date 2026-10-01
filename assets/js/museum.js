@@ -12,10 +12,13 @@ document.title=`${x.n}｜中國文物博物館`;
 
 const items=MUS_ITEMS[id]||[];
 const kw=encodeURIComponent(x.n);
+// 百度系服務用簡體館名
+const scKw=encodeURIComponent(x.sc||x.n);
 const peers=Object.keys(MUSEUMS).filter(m=>m!==id&&MUSEUMS[m].p===x.p).sort((a,b)=>musCount(b)-musCount(a));
 
-// 依專題分組，保留專題內原本順序
-const groups=Object.entries(TOPICS).sort((a,b)=>SECTIONS.findIndex(s=>s.key===a[0])-SECTIONS.findIndex(s=>s.key===b[0])).map(([k,t])=>[k,t,items.filter(it=>it.topic===k)]).filter(g=>g[2].length);
+// 依專題分組，保留專題內原本順序；沒有專題頁的（館藏精選）排最後
+const secIdx=k=>{const i=SECTIONS.findIndex(s=>s.key===k);return i<0?99:i;};
+const groups=Object.entries(TOPICS).sort((a,b)=>secIdx(a[0])-secIdx(b[0])).map(([k,t])=>[k,t,items.filter(it=>it.topic===k)]).filter(g=>g[2].length);
 
 page.innerHTML=`
   <div class="crumbs"><a href="museums.html">博物館名錄</a><span>/</span><a href="museums.html?prov=${encodeURIComponent(x.p)}">${x.p}</a></div>
@@ -33,10 +36,12 @@ page.innerHTML=`
   </div>
   <div class="linkrow">
     <a href="https://zh.wikipedia.org/w/index.php?search=${kw}" target="_blank" rel="noopener">維基百科 ↗</a>
-    <a href="https://www.google.com/maps/search/${kw}" target="_blank" rel="noopener">地圖 ↗</a>
+    <a href="${x.bk?"https://baike.baidu.com/item/"+x.bk.split("/").map(encodeURIComponent).join("/"):"https://baike.baidu.com/search?word="+scKw}" target="_blank" rel="noopener">百度百科 ↗</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=${kw}" target="_blank" rel="noopener">Google 地圖 ↗</a>
+    <a href="https://map.baidu.com/search/${scKw}?querytype=s&wd=${scKw}" target="_blank" rel="noopener">百度地圖 ↗</a>
     <a href="https://www.google.com/search?q=${kw}+官方網站" target="_blank" rel="noopener">搜尋官方網站 ↗</a>
   </div>
-  ${groups.map(([k,t,a])=>`<section class="panel"><h2><a href="${t.href}">${t.t}</a><span>${a.length} ${t.unit}</span></h2><div class="grid">${a.map(itemRow).join("")}</div></section>`).join("")
+  ${groups.map(([k,t,a])=>`<section class="panel"><h2>${t.href?`<a href="${t.href}">${t.t}</a>`:t.t}<span>${a.length} ${t.unit}</span></h2><div class="grid">${a.map(itemRow).join("")}</div></section>`).join("")
     ||`<div class="panel"><div class="empty">本站目前尚未收錄這個機構的文物。</div></div>`}
   ${peers.length?`<section class="panel"><h2>${x.p}的其他收藏機構<span>${peers.length} 個</span></h2><div class="grid">${peers.map(museumRow).join("")}</div></section>`:""}
   <footer><div>機構簡介為摘要整理；開放時間、票價與展出狀況請以館方公告為準。</div></footer>`;

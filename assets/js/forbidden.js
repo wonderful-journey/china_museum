@@ -62,6 +62,15 @@ function renderPanel(list){
     :`<div class="empty">${state.prov}在目前的篩選條件下沒有禁止出境展覽文物。</div>`;
 }
 
+// 地圖下方的完整清單：依批次分組、維持公布順序，套用與地圖相同的篩選
+function renderList(list){
+  const mus=it=>it.mus.map(m=>MUSEUMS[m].n).join("、");
+  const groups=[1,2,3].map(b=>[b,list.filter(it=>it.batch===b)]).filter(g=>g[1].length);
+  $("#dir").innerHTML=`<div class="dirhead"><h2 class="hsect">文物清單</h2><span>${state.prov?state.prov+" · ":""}${list.length} 件（組）</span></div>`
+    +(groups.length?groups.map(([b,a])=>`<div class="dgroup"><h3>${BATCH[b].t}（${BATCH[b].y}）<span>${a.length}</span></h3><div class="dgrid">${a.map(it=>itemRow(it,mus(it))).join("")}</div></div>`).join("")
+      :`<div class="empty">沒有符合條件的文物。</div>`);
+}
+
 // map
 let curList=[];
 const map=chinaMap($("#map"),$("#legend"),{steps:[1,4,10,20,40],
@@ -71,6 +80,7 @@ function update(){
   const list=filtered();
   if(state.prov) curList=list.filter(it=>it.mus.some(m=>MUSEUMS[m].p===state.prov)); else curList=list;
   renderPanel(list);
+  renderList(curList);
   map.render({provCounts:byProv(list),sel:state.prov,
     points:Object.entries(byMus(list)).map(([m,a])=>({name:MUSEUMS[m].n,value:[...MUSEUMS[m].c,a.length],prov:MUSEUMS[m].p,id:m}))});
 }

@@ -27,6 +27,6 @@ $("#sections").innerHTML=SECTIONS.map(s=>{
 }).join("");
 
 // 關於本站：收錄數字隨資料更新
-[["#ab-mus",Object.keys(MUSEUMS).length],["#ab-fb",TOPICS.forbidden.items.length],["#ab-tr",TOPICS.treasures.items.length],["#ab-all",total],["#ab-per",PERIODS.length]]
+[["#ab-mus",Object.keys(MUSEUMS).length],["#ab-fb",TOPICS.forbidden.items.length],["#ab-tr",TOPICS.treasures.items.length],["#ab-cl",TOPICS.collections?new Set(TOPICS.collections.items.map(it=>it.mus[0])).size:0],["#ab-cln",TOPICS.collections?TOPICS.collections.items.length:0],["#ab-all",total],["#ab-per",PERIODS.length]]
   .forEach(([sel,n])=>$(sel).textContent=n);
 })();

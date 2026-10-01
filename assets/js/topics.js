@@ -22,6 +22,12 @@ if(typeof TREASURES!=="undefined")
       tagB:"鎮館",tagN:MUSEUMS[r[0]].p,cls:"tr",dup:f?f.id:null,
       label:`${MUSEUMS[r[0]].n} · 鎮館之寶${f?"（亦列禁止出境展覽文物）":""}`};})};
 
+// 館藏精選（需先載入 data/collections.js）；沒有專題頁，只出現在單館頁、依朝代瀏覽與首頁統計
+if(typeof COLLECTIONS!=="undefined")
+  TOPICS.collections={t:"館藏精選",href:null,unit:"件",items:COLLECTIONS.map((r,i)=>({
+    id:"collections-"+i,topic:"collections",cat:r[1],name:r[2],era:r[3],mus:[r[0]],desc:r[4],
+    tagB:"館藏",tagN:MUSEUMS[r[0]].p,cls:"cl",label:`${MUSEUMS[r[0]].n} · 館藏精選`}))};
+
 const ITEM_INDEX={};
 Object.values(TOPICS).forEach(t=>t.items.forEach(it=>ITEM_INDEX[it.id]=it));
 // 不重複的文物（排除與其他專題重複者）

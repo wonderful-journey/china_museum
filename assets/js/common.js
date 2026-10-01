@@ -22,8 +22,8 @@ const SECTIONS=[
     <div class="navlinks">${links.map(l=>`<a href="${l.href}"${l.key===active?' aria-current="page"':""}>${l.t}</a>`).join("")}</div>`;
 })();
 
-// 文物清單列與詳情卡（頁面需有 #scrim > #card）
-function itemRow(it){return `<button class="item" data-i="${it.id}">${imageThumb(it.name)}<span class="tag ${it.cls}"><b>${it.tagB}</b>${it.tagN}</span><span><span class="nm">${esc(it.name)}</span><br><span class="meta">${esc(it.era)} · ${it.cat}</span></span></button>`;}
+// 文物清單列與詳情卡（頁面需有 #scrim > #card）；extra 為附加在年代、類別後的說明（如收藏單位）
+function itemRow(it,extra){return `<button class="item" data-i="${it.id}">${imageThumb(it.name)}<span class="tag ${it.cls}"><b>${it.tagB}</b>${it.tagN}</span><span><span class="nm">${esc(it.name)}</span><br><span class="meta">${esc(it.era)} · ${it.cat}${typeof extra==="string"&&extra?" · "+esc(extra):""}</span></span></button>`;}
 // 文物圖片（需載入 data/images.js）；無圖或載入失敗時不顯示
 const imageOf=name=>typeof IMAGES!=="undefined"&&IMAGES[name];
 // 維基共享資源的指定寬度縮圖網址：已是縮圖者換寬度，原檔網址則改為 thumb 路徑
@@ -65,14 +65,17 @@ function openDetail(it,list){
   if(list)detailList=list;
   const idx=detailList.indexOf(it);
   const mus=it.mus.map(m=>`<a href="museum.html?id=${m}">${MUSEUMS[m].n}</a>（${MUSEUMS[m].p}）`).join("、");
-  const kw=encodeURIComponent(it.name.replace(/[（(].*?[）)]/g,""));
+  const base=it.name.replace(/[（(].*?[）)]/g,""),kw=encodeURIComponent(base);
+  // 百度百科：有百度圖片者直接連該詞條，其餘以簡體名稱搜尋（需載入 data/names_sc.js）
+  const im=imageOf(it.name),sc=typeof NAMES_SC!=="undefined"&&NAMES_SC[base]||base;
+  const bk=im&&im.site==="百度百科"?im.page:"https://baike.baidu.com/search?word="+encodeURIComponent(sc);
   $("#card").innerHTML=`<button class="x" id="dClose" aria-label="關閉">×</button>
    <div class="no ${it.cls}">${it.label}</div>
    <h2 id="dTitle">${esc(it.name)}</h2>
    ${imageFigure(it.name)}
    <dl><dt>年代</dt><dd>${esc(it.era)}</dd><dt>類別</dt><dd>${it.cat}</dd><dt>收藏單位</dt><dd>${mus}</dd></dl>
    ${detailText(it)}
-   <div class="links"><a href="https://www.google.com/search?tbm=isch&q=${kw}" target="_blank" rel="noopener">查看圖片 ↗</a><a href="https://zh.wikipedia.org/w/index.php?search=${kw}" target="_blank" rel="noopener">維基百科 ↗</a></div>
+   <div class="links"><a href="https://www.google.com/search?tbm=isch&q=${kw}" target="_blank" rel="noopener">查看圖片 ↗</a><a href="https://zh.wikipedia.org/w/index.php?search=${kw}" target="_blank" rel="noopener">維基百科 ↗</a><a href="${bk}" target="_blank" rel="noopener">百度百科 ↗</a></div>
    ${videoList(it.name)}
    <div class="nav"><button id="dPrev" ${idx<=0?"disabled":""}>← 上一件</button><button id="dNext" ${idx<0||idx>=detailList.length-1?"disabled":""}>下一件 →</button></div>`;
   $("#scrim").hidden=false;

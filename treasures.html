@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/css/base.css?v=20261001i">
+<link rel="stylesheet" href="assets/css/base.css?v=20261001p">
 </head>
 <body>
 
@@ -17,7 +17,7 @@
     <div class="seal" aria-hidden="true"><span>鎮</span><span>館</span><span>之</span><span>寶</span></div>
     <div>
       <h1>鎮館之寶</h1>
-      <p class="lede">全國 31 家省級博物館最具代表性的館藏，每館三件。點選省份查看，點選文物看介紹。</p>
+      <p class="lede">全國 31 家省級博物館最具代表性的館藏，每館三件。可依類別、省份篩選或搜尋，點選文物看介紹。</p>
     </div>
   </header>
 
@@ -25,20 +25,11 @@
 
   <div class="controls">
     <div class="group" id="catG"><span class="lbl">類別</span></div>
+    <select id="prov" aria-label="選擇省份"></select>
     <input id="q" type="search" placeholder="搜尋文物或博物館，例如：鼎、湖北" aria-label="搜尋文物或博物館">
   </div>
 
-  <div class="main">
-    <div class="mapbox">
-      <div id="map" role="img" aria-label="中國各省鎮館之寶數量地圖"></div>
-      <div class="maphint">點省份篩選 · 圓點為博物館</div>
-      <div class="legend" id="legend"></div>
-    </div>
-    <aside>
-      <div class="ph" id="ph"></div>
-      <div class="plist" id="plist"></div>
-    </aside>
-  </div>
+  <div class="tlist" id="tlist"></div>
 
   <footer>
     <div>「鎮館之寶」並無官方名單。本頁省級博物館依<a href="https://www.sohu.com/a/888380824_122048280" target="_blank" rel="noopener">搜狐〈一篇文章帶你看全全國31家省級博物館的鎮館之寶〉</a>整理每館第一件，其餘依各館公布的鎮館之寶名單（如河南博物院九大鎮院之寶、南京博物院十八件鎮院之寶、湖北省博物館十大鎮館之寶）與媒體報導補充，每館三件（西藏博物館兩件）；除館方名單外多屬媒體彙整，並非館方認定；同一件若也在「禁止出境展覽文物」名單中會另行標示。文物介紹為摘要整理，展出狀況請以館方公告為準。</div>
@@ -49,17 +40,15 @@
   <div class="card" role="dialog" aria-modal="true" aria-labelledby="dTitle" id="card"></div>
 </div>
 
-<script src="assets/vendor/echarts.min.js?v=20261001i"></script>
-<script src="assets/vendor/china-geo.js?v=20261001i"></script>
-<script src="data/museums.js?v=20261001i"></script>
-<script src="data/forbidden.js?v=20261001i"></script>
-<script src="data/treasures.js?v=20261001i"></script>
-<script src="data/images.js?v=20261001i"></script>
-<script src="data/details.js?v=20261001i"></script>
-<script src="assets/js/common.js?v=20261001i"></script>
-<script src="assets/js/topics.js?v=20261001i"></script>
-<script src="assets/js/map.js?v=20261001i"></script>
-<script src="assets/js/treasures.js?v=20261001i"></script>
+<script src="data/museums.js?v=20261001p"></script>
+<script src="data/forbidden.js?v=20261001p"></script>
+<script src="data/treasures.js?v=20261001p"></script>
+<script src="data/images.js?v=20261001p"></script>
+<script src="data/details.js?v=20261001p"></script>
+<script src="data/names_sc.js?v=20261001p"></script>
+<script src="assets/js/common.js?v=20261001p"></script>
+<script src="assets/js/topics.js?v=20261001p"></script>
+<script src="assets/js/treasures.js?v=20261001p"></script>
 
 </body>
 </html>
