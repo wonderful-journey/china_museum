@@ -2,8 +2,7 @@
 // stats
 const provs=new Set(Object.values(MUSEUMS).map(m=>m.p));
 const total=UNIQUE_ITEMS.length;
-const ready=SECTIONS.filter(s=>s.ready).length;
-$("#stats").innerHTML=[[Object.keys(MUSEUMS).length,"收藏機構"],[provs.size,"省級行政區"],[total,"件（組）文物已收錄"],[`${ready} / ${SECTIONS.length}`,"專題已上線"]]
+$("#stats").innerHTML=[[Object.keys(MUSEUMS).length,"收藏機構"],[provs.size,"省級行政區"],[total,"件（組）文物已收錄"]]
   .map(s=>`<div class="stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
 
 // 朝代時間軸：各時期等寬排列，點選連到依朝代瀏覽的該時期；本站無文物的時期不可點
@@ -26,4 +25,8 @@ $("#sections").innerHTML=SECTIONS.map(s=>{
   const body=`<h3>${s.t}</h3><p>${s.d}</p><span class="meta">${meta}</span>`;
   return s.ready?`<a class="sec" href="${s.href}">${body}</a>`:`<div class="sec soon">${body}</div>`;
 }).join("");
+
+// 關於本站：收錄數字隨資料更新
+[["#ab-mus",Object.keys(MUSEUMS).length],["#ab-fb",TOPICS.forbidden.items.length],["#ab-tr",TOPICS.treasures.items.length],["#ab-all",total],["#ab-per",PERIODS.length]]
+  .forEach(([sel,n])=>$(sel).textContent=n);
 })();

@@ -8,8 +8,8 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 // 全站專題分類：首頁卡片與導覽列共用；ready:false 為籌備中，不出現在導覽列
 const SECTIONS=[
   {key:"museums",t:"博物館名錄",href:"museums.html",ready:true,d:"全中國以古代文物為主的國家一級、二級博物館與各專題文物的收藏機構，依地圖與省份瀏覽。"},
-  {key:"forbidden",t:"禁止出境展覽文物",href:"forbidden.html",ready:true,d:"國家文物局 2002、2012、2013 年分三批公布，永久禁止出境展覽的一級文物。"},
   {key:"treasures",t:"鎮館之寶",href:"treasures.html",ready:true,d:"各省級博物館最具代表性的館藏，依地圖與省份瀏覽。"},
+  {key:"forbidden",t:"禁止出境展覽文物",href:"forbidden.html",ready:true,d:"國家文物局 2002、2012、2013 年分三批公布，永久禁止出境展覽的一級文物。"},
   {key:"dynasty",t:"依朝代瀏覽",href:"dynasty.html",ready:true,d:"從新石器時代到明清，以時間軸串起各時期的重要文物。"}
 ];
 
@@ -35,13 +35,15 @@ function thumbUrl(src,w){
 // 清單縮圖改用維基共享資源的 120px 縮圖，減少下載量；無圖時放同尺寸的空方塊，讓各列對齊
 function imageThumb(name){
   const im=imageOf(name);
-  return im?`<img class="th" src="${im.th||thumbUrl(im.src,120)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'th'}))">`:`<span class="th" aria-hidden="true"></span>`;
+  return im?`<img class="th" src="${im.th||thumbUrl(im.src,120)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'th'}))">`:`<span class="th" aria-hidden="true"></span>`;
 }
 function imageFigure(name){
   const im=imageOf(name);
   if(!im)return "";
-  return `<figure class="pic"><img src="${im.src}" alt="${esc(name)}" onerror="this.parentNode.hidden=true">
-    <figcaption>圖：${esc(im.by)} · ${im.lic} · <a href="${im.page}" target="_blank" rel="noopener">維基共享資源 ↗</a></figcaption></figure>`;
+  const cap=im.site?`圖：<a href="${im.page}" target="_blank" rel="noopener">${im.site} ↗</a>`
+    :`圖：${esc(im.by)} · ${im.lic} · <a href="${im.page}" target="_blank" rel="noopener">維基共享資源 ↗</a>`;
+  return `<figure class="pic"><img src="${im.src}" alt="${esc(name)}" referrerpolicy="no-referrer" onerror="this.parentNode.hidden=true">
+    <figcaption>${cap}</figcaption></figure>`;
 }
 // 詳細介紹與影片（需載入 data/details.js）；沒有詳細介紹時沿用專題資料的短介紹
 const detailOf=name=>typeof DETAILS!=="undefined"&&DETAILS[name];

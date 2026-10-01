@@ -15,7 +15,7 @@ const kw=encodeURIComponent(x.n);
 const peers=Object.keys(MUSEUMS).filter(m=>m!==id&&MUSEUMS[m].p===x.p).sort((a,b)=>musCount(b)-musCount(a));
 
 // 依專題分組，保留專題內原本順序
-const groups=Object.entries(TOPICS).map(([k,t])=>[k,t,items.filter(it=>it.topic===k)]).filter(g=>g[2].length);
+const groups=Object.entries(TOPICS).sort((a,b)=>SECTIONS.findIndex(s=>s.key===a[0])-SECTIONS.findIndex(s=>s.key===b[0])).map(([k,t])=>[k,t,items.filter(it=>it.topic===k)]).filter(g=>g[2].length);
 
 page.innerHTML=`
   <div class="crumbs"><a href="museums.html">博物館名錄</a><span>/</span><a href="museums.html?prov=${encodeURIComponent(x.p)}">${x.p}</a></div>
