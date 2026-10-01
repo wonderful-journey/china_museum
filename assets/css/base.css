@@ -144,6 +144,9 @@ a.sec:hover{border-color:var(--accent)}
 .tcard h3{font-family:var(--serif);font-size:18px;margin:0 0 4px;padding:0 8px;line-height:1.4}
 .tcard .item{grid-template-columns:44px 1fr}
 .tcard .item .tag{display:none}
+.tcard .prov .badge{margin-left:6px}
+.tcard .tsub{font-size:12px;font-weight:700;letter-spacing:.08em;padding:8px 8px 2px}
+.tcard .tsub.tr{color:var(--seal)} .tcard .tsub.cl{color:var(--cl)}
 .tcard h3 a{color:inherit;text-decoration:none}
 .tcard h3 a:hover{color:var(--accent);text-decoration:underline}
 /* 首頁：關於本站 */
@@ -189,9 +192,15 @@ a.rank{text-decoration:none}
 .tbar:hover .b{background:var(--accent)}
 .tbar:hover .l{color:var(--accent)}
 .tbar.zero{opacity:.35}
+/* 朝代快選：捲動時固定於頂端，時期區塊的 scroll-margin 依其高度留白 */
+.pjump{position:sticky;top:0;z-index:10;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;margin-inline:-20px;padding:10px 20px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.pjump .chip{flex:none;white-space:nowrap}
+.pjump .chip small{font-size:11px;opacity:.75;font-variant-numeric:tabular-nums}
+.pjump .chip:disabled{opacity:.35;cursor:default;border-color:var(--line)}
+.pjump .chip[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
 .tl{display:grid;gap:16px;position:relative;padding-left:24px}
 .tl::before{content:"";position:absolute;left:7px;top:10px;bottom:10px;width:2px;background:var(--line)}
-.tl .panel{position:relative;scroll-margin-top:16px}
+.tl .panel{position:relative;scroll-margin-top:calc(var(--pjump-h,0px) + 16px)}
 .tl .panel::before{content:"";position:absolute;left:-23px;top:17px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2.5px solid var(--seal)}
 /* home: horizontal dynasty timeline（窄螢幕時於框內橫向捲動） */
 .tlh{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 12px 10px;overflow-x:auto}

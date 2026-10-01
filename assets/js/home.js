@@ -20,7 +20,7 @@ const periods=new Set(UNIQUE_ITEMS.map(it=>it.period)).size;
 const EXTRA={museums:`${Object.keys(MUSEUMS).length} 個機構 · 一級 ${lv1}、二級 ${lv2}`,dynasty:`${total} 件 · ${periods} 個時期`};
 $("#sections").innerHTML=SECTIONS.map(s=>{
   const t=TOPICS[s.key];
-  const count=t?`${t.items.length} ${t.unit} · `:EXTRA[s.key]?EXTRA[s.key]+" · ":"";
+  const count=s.key==="treasures"&&TOPICS.collections?`${t.items.length+TOPICS.collections.items.length} 件 · `:t?`${t.items.length} ${t.unit} · `:EXTRA[s.key]?EXTRA[s.key]+" · ":"";
   const meta=s.ready?`${count}<span style="white-space:nowrap">進入專題 →</span>`:"籌備中";
   const body=`<h3>${s.t}</h3><p>${s.d}</p><span class="meta">${meta}</span>`;
   return s.ready?`<a class="sec" href="${s.href}">${body}</a>`:`<div class="sec soon">${body}</div>`;

@@ -770,5 +770,102 @@ const DETAILS = {
     ["南博這幅磚畫珍貴到禁止出境","YouTube","江蘇新聞",1,"https://www.youtube.com/watch?v=06kZtP385mM","江蘇新聞官方頻道發布的短片。"],
     ["《國寶時刻·竹林七賢與榮啟期磚畫》","Bilibili","國家文物局",5,"https://www.bilibili.com/video/BV1QnyZBFE9o/","國家文物局官方帳號發布的國寶介紹短片。"],
     ["《國寶在金陵》：活得漂亮——南朝竹林七賢與榮啟期磚畫（下）","Bilibili","南京廣播電視台",4,"https://www.bilibili.com/video/BV1Fy4y1U7Qz/","南京廣播電視台節目的下集。"]
+  ]},
+// 館藏精選：目前只列影片，介紹沿用館藏精選的短介紹
+"獅子山楚王陵金縷玉衣":{
+  videos:[
+    ["《王陵疑雲》第四集 獅子山楚王陵金縷玉衣","YouTube","CCTV紀錄",26,"https://www.youtube.com/watch?v=s-Q4wZsqpeU","央視紀錄片，講述獅子山楚王陵的發掘與金縷玉衣的修復。"],
+    ["獅子山楚王陵金縷玉衣：大漢王朝的奢華與威嚴","YouTube","中華國寶",30,"https://www.youtube.com/watch?v=Xrh0s2NMP-s","央視節目，介紹這件金縷玉衣的形制與工藝。"]
+  ]},
+"七寶阿育王塔":{
+  videos:[
+    ["[中國國寶大會] 七寶阿育王塔","YouTube","中華國寶",3,"https://www.youtube.com/watch?v=bgsY3Sqbd8E","央視《中國國寶大會》片段，介紹長干寺地宮出土的七寶阿育王塔。"]
+  ]},
+"龍興寺佛教造像":{
+  videos:[
+    ["[如果國寶會說話] 第三季 青州龍興寺佛教造像","YouTube","CCTV紀錄",5,"https://www.youtube.com/watch?v=p_Etv40gLnM","央視《如果國寶會說話》單集。"],
+    ["【東西問·鎮館之寶】青州龍興寺佛教造像何以改寫東方藝術史？","YouTube","中國新聞社",5,"https://www.youtube.com/watch?v=YcusdDal7E0","中新社專訪青州博物館人員談龍興寺造像。"]
+  ]},
+"銀雀山漢墓竹簡":{
+  videos:[
+    ["兵書的四大名著原來都在銀雀山漢墓竹簡中","YouTube","中華國寶",2,"https://www.youtube.com/watch?v=YMn-1Jb6Ae0","央視《中國國寶大會》第二季片段。"]
+  ]},
+"《江漢攬勝圖》":{
+  videos:[
+    ["國家一級文物《江漢攬勝圖》——武漢博物館《博物館說》","YouTube","中華國寶",5,"https://www.youtube.com/watch?v=ND-ENJjGnzE","武漢博物館館員講解這幅長卷。"],
+    ["《來！泛舟「江漢攬勝圖」》","Bilibili","國家文物局",2,"https://www.bilibili.com/video/BV14x4y1r75e/","國家文物局官方帳號發布的動畫短片。"],
+    ["快一起來泛舟《江漢攬勝圖》","Bilibili","武漢博物館社教部",2,"https://www.bilibili.com/video/BV11g411d7ZZ/","武漢博物館社教部的介紹短片。"]
+  ]},
+"走馬樓三國吳簡":{
+  videos:[
+    ["《國寶檔案》長沙走馬樓三國吳簡","YouTube","中華國寶",13,"https://www.youtube.com/watch?v=WDCCWufnWn4","央視《國寶檔案》單集。"],
+    ["《簡牘探中華》第二季 長沙走馬樓三國吳簡","YouTube","CCTV中國中央電視台",89,"https://www.youtube.com/watch?v=a1-muGQA-OI","央視節目完整版，介紹吳簡的發現與研究。"]
+  ]},
+"金絲翼善冠":{
+  videos:[
+    ["明萬曆皇帝的金絲皇冠——金絲翼善冠","YouTube","中華國寶",8,"https://www.youtube.com/watch?v=Y-IpUqzJ0Yk","央視節目片段，介紹定陵出土金冠的編織工藝。"]
+  ]},
+"白衣彩陶盆":{
+  videos:[
+    ["《大河村遺址》（下）","YouTube","中華國寶",38,"https://www.youtube.com/watch?v=A7ClJE-_ZnY","央視紀錄片下集，介紹白衣彩陶盆上的星象紋飾。"]
+  ]},
+"里耶秦簡":{
+  videos:[
+    ["[如果國寶會說話] 第二季 里耶秦簡：秦朝縣城那些事兒","YouTube","CCTV紀錄",5,"https://www.youtube.com/watch?v=EFxgA-k-O4Y","央視《如果國寶會說話》單集。"],
+    ["《國寶檔案》湖南里耶秦簡","YouTube","中華國寶",14,"https://www.youtube.com/watch?v=ccp61DPuAMk","央視《國寶檔案》單集。"],
+    ["何以中國：你認識里耶秦簡上的字嗎？","Bilibili","國家文物局",1,"https://www.bilibili.com/video/BV1GZ421J75M/","國家文物局官方帳號的短片。"]
+  ]},
+"孔子徒人圖漆衣鏡":{
+  videos:[
+    ["《國寶時刻·孔子徒人圖漆衣鏡》","Bilibili","國家文物局",6,"https://www.bilibili.com/video/BV13mkZBREs1/","國家文物局官方帳號發布的國寶介紹短片。"]
+  ]},
+"趙秉忠殿試卷":{
+  videos:[
+    ["《國寶在山東》第二季《明狀元趙秉忠殿試卷》","Bilibili","山東衛視",6,"https://www.bilibili.com/video/BV1gRJ4zFESK/","山東衛視節目單集。"]
+  ]},
+"萊子侯刻石":{
+  videos:[
+    ["百名博物館館長講文物：《萊子侯刻石》","Bilibili","鄒城博物館",4,"https://www.bilibili.com/video/BV1ePGwzrEBE/","鄒城博物館官方帳號，館員講解這方刻石。"],
+    ["【絲路百館百物】鄒城博物館——西漢萊子侯刻石","Bilibili","中國絲綢博物館",3,"https://www.bilibili.com/video/BV1A2gozyEbD/","中國絲綢博物館「絲路百館百物」系列。"]
+  ]},
+"賈伯壺":{
+  videos:[
+    ["賈伯壺","Bilibili","中國文字博物館",4,"https://www.bilibili.com/video/BV1w84y1M7Qc/","中國文字博物館官方帳號的文物介紹。"]
+  ]},
+"更路簿":{
+  videos:[
+    ["【絲路百館百物】中國（海南）南海博物館——更路簿","Bilibili","中國絲綢博物館",3,"https://www.bilibili.com/video/BV1fQ4y1R7Wj/","中國絲綢博物館「絲路百館百物」系列。"]
+  ]},
+"珐華貼金鏤空孔雀牡丹紋大罐":{
+  videos:[
+    ["「文物志願說」：明珐華貼金鏤空孔雀牡丹紋大罐","Bilibili","中國南海博物館",2,"https://www.bilibili.com/video/BV1VtFNeFExP/","中國南海博物館官方帳號的科普短片。"]
+  ]},
+"《四時月令詔條》":{
+  videos:[
+    ["甘肅簡牘博物館鎮館之寶《四時月令詔條》","Bilibili","東南衛視",1,"https://www.bilibili.com/video/BV1NMYy6HEWi/","東南衛視新聞短片。"]
+  ]},
+"北魏漆棺畫":{
+  videos:[
+    ["沙繪漆畫——固原北魏漆棺畫","Bilibili","寧夏固原博物館",8,"https://www.bilibili.com/video/BV1ShdHY4E6K/","固原博物館官方帳號，以沙畫重現漆棺畫面。"]
+  ]},
+"永樂大鐘":{
+  videos:[
+    ["《國寶時刻·永樂大鐘》","Bilibili","國家文物局",5,"https://www.bilibili.com/video/BV14G1kB5E8u/","國家文物局官方帳號發布的國寶介紹短片。"]
+  ]},
+"卵白釉堆花五彩描金花卉紋高足杯":{
+  videos:[
+    ["元代景德鎮窯卵白釉堆花五彩描金花卉紋高足杯","Bilibili","興安盟博物館",6,"https://www.bilibili.com/video/BV18k4y1z7Zr/","興安盟博物館官方帳號的文物介紹。"]
+  ]},
+"徐謂禮文書":{
+  videos:[
+    ["【講座】包偉民：從徐謂禮文書看南宋社會","Bilibili","蘇州吳文化博物館",88,"https://www.bilibili.com/video/BV1vm421n7yf/","歷史學者包偉民的講座錄影。"]
+  ]},
+"黃釉鎮墓獸":{
+  videos:[
+    ["鞏義市博物館館藏珍品——唐代黃釉鎮墓獸","Bilibili","鞏義市博物館",1,"https://www.bilibili.com/video/BV1sXzwYXEvA/","鞏義市博物館官方帳號的短片。"]
+  ]},
+"南漢玻璃瓶":{
+  videos:[
+    ["【絲路百館百物】南漢二陵博物館——南漢玻璃瓶","Bilibili","中國絲綢博物館",3,"https://www.bilibili.com/video/BV1DM4m1y7E6/","中國絲綢博物館「絲路百館百物」系列。"]
   ]}
 };

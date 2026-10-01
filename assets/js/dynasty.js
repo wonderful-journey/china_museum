@@ -33,7 +33,27 @@ function update(){
     <span class="n">${a.length}</span><span class="b" style="height:${a.length/max*120}px"></span><span class="l">${p.s}</span></button>`).join("");
   $("#tl").innerHTML=groups.filter(g=>g[1].length).map(([p,a])=>`<section class="panel" id="p-${p.key}"><h2>${p.t}<span>${p.y} · ${a.length} 件</span></h2><div class="grid">${a.map(itemRow).join("")}</div></section>`).join("")
     ||`<div class="panel"><div class="empty">沒有符合條件的文物。試試清除搜尋字或切換類別。</div></div>`;
+  $("#pjump").innerHTML=groups.map(([p,a])=>`<button class="chip" data-per="${p.key}" title="${p.t} ${p.y}"${a.length?"":" disabled"}>${p.s}<small>${a.length}</small></button>`).join("");
+  spy();
 }
+
+// 朝代快選：依捲動位置標示目前所在時期，並讓該按鈕保持在快選列可視範圍內
+const bar=$("#pjump");
+function syncBarH(){document.documentElement.style.setProperty("--pjump-h",bar.offsetHeight+"px");}
+function spy(){
+  const line=bar.offsetHeight+24;
+  let cur=null;
+  for(const s of document.querySelectorAll("#tl .panel[id]")){if(s.getBoundingClientRect().top<=line)cur=s.id.slice(2);else break;}
+  for(const b of bar.querySelectorAll("[data-per]")){
+    const on=b.dataset.per===cur;
+    if(on&&b.getAttribute("aria-current")!=="true")
+      bar.scrollTo({left:b.offsetLeft-(bar.clientWidth-b.offsetWidth)/2,behavior:"smooth"});
+    b.setAttribute("aria-current",on);
+  }
+}
+let ticking=false;
+addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;spy();});}},{passive:true});
+new ResizeObserver(syncBarH).observe(bar);
 
 document.addEventListener("click",e=>{
   const c=e.target.closest("[data-c]");
@@ -46,6 +66,7 @@ document.addEventListener("click",e=>{
 });
 $("#q").addEventListener("input",e=>{state.q=e.target.value;update();});
 
+syncBarH();
 update();
 // 從首頁時間軸連入（#p-tang 等）時捲到該時期；時期區塊是程式產生的，瀏覽器不會自動捲動
 if(/^#p-\w+$/.test(location.hash)){const s=$(location.hash);if(s)s.scrollIntoView();}

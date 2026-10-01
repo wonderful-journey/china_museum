@@ -8,7 +8,7 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 // 全站專題分類：首頁卡片與導覽列共用；ready:false 為籌備中，不出現在導覽列
 const SECTIONS=[
   {key:"museums",t:"博物館名錄",href:"museums.html",ready:true,d:"全中國以古代文物為主的國家一級、二級博物館與各專題文物的收藏機構，依地圖與省份瀏覽。"},
-  {key:"treasures",t:"鎮館之寶",href:"treasures.html",ready:true,d:"各省級博物館最具代表性的館藏，依地圖與省份瀏覽。"},
+  {key:"treasures",t:"鎮館之寶與館藏精選",href:"treasures.html",ready:true,d:"各省級博物館最具代表性的鎮館之寶，以及各地博物館的館藏精選，依省份與博物館瀏覽。"},
   {key:"forbidden",t:"禁止出境展覽文物",href:"forbidden.html",ready:true,d:"國家文物局 2002、2012、2013 年分三批公布，永久禁止出境展覽的一級文物。"},
   {key:"dynasty",t:"依朝代瀏覽",href:"dynasty.html",ready:true,d:"從新石器時代到明清，以時間軸串起各時期的重要文物。"}
 ];
@@ -19,7 +19,7 @@ const SECTIONS=[
   const active=nav.dataset.active||"home";
   const links=[{key:"home",t:"首頁",href:"index.html"},...SECTIONS.filter(s=>s.ready)];
   nav.innerHTML=`<a class="brand" href="index.html"><span class="mini" aria-hidden="true">博</span>中國文物博物館</a>
-    <div class="navlinks">${links.map(l=>`<a href="${l.href}"${l.key===active?' aria-current="page"':""}>${l.t}</a>`).join("")}</div>`;
+    <div class="navlinks">${links.map(l=>`<a href="${l.href}"${l.key===active?' aria-current="page"':""}>${l.nav||l.t}</a>`).join("")}</div>`;
 })();
 
 // 文物清單列與詳情卡（頁面需有 #scrim > #card）；extra 為附加在年代、類別後的說明（如收藏單位）
@@ -45,11 +45,11 @@ function imageFigure(name){
   return `<figure class="pic"><img src="${im.src}" alt="${esc(name)}" referrerpolicy="no-referrer" onerror="this.parentNode.hidden=true">
     <figcaption>${cap}</figcaption></figure>`;
 }
-// 詳細介紹與影片（需載入 data/details.js）；沒有詳細介紹時沿用專題資料的短介紹
+// 詳細介紹與影片（需載入 data/details.js）；沒有詳細介紹（或只列影片）時沿用專題資料的短介紹
 const detailOf=name=>typeof DETAILS!=="undefined"&&DETAILS[name];
 function detailText(it){
   const d=detailOf(it.name);
-  if(!d)return `<p>${esc(it.desc)}</p>`;
+  if(!d||!d.text)return `<p>${esc(it.desc)}</p>`;
   const refs=d.refs&&d.refs.length?`<div class="refs">參考資料：${d.refs.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("、")}</div>`:"";
   return `<div class="long">${d.text.map(p=>`<p>${esc(p)}</p>`).join("")}</div>${refs}`;
 }
