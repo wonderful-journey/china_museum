@@ -762,5 +762,8 @@ const IMAGES = {
   page:"https://baike.baidu.com/item/%E9%BB%91%E9%87%89%E6%89%A3%E9%93%B6%E5%A4%A9%E7%9B%AE%E7%9B%8F",site:"百度百科"},
 "袁承嘉墓誌":{th:"https://bkimg.cdn.bcebos.com/pic/42166d224f4a20a44623f38fb70f8f22720e0cf37a7f?x-bce-process=image/resize,m_lfit,w_120",
   src:"https://bkimg.cdn.bcebos.com/pic/42166d224f4a20a44623f38fb70f8f22720e0cf37a7f?x-bce-process=image/resize,m_lfit,w_960",
-  page:"https://baike.baidu.com/item/%E5%A4%A7%E5%91%A8%E6%95%85%E6%9C%9D%E6%95%A3%E9%83%8E%E8%A1%8C%E9%82%93%E5%B7%9E%E5%8F%B8%E6%B3%95%E5%8F%82%E5%86%9B%E4%BA%8B%E8%A2%81%E5%BA%9C%E5%90%9B%EF%BC%88%E6%89%BF%E5%98%89%EF%BC%89%E5%A2%93%E5%BF%97%E9%93%AD%E5%B9%B6%E5%BA%8F/68066532",site:"百度百科"}
+  page:"https://baike.baidu.com/item/%E5%A4%A7%E5%91%A8%E6%95%85%E6%9C%9D%E6%95%A3%E9%83%8E%E8%A1%8C%E9%82%93%E5%B7%9E%E5%8F%B8%E6%B3%95%E5%8F%82%E5%86%9B%E4%BA%8B%E8%A2%81%E5%BA%9C%E5%90%9B%EF%BC%88%E6%89%BF%E5%98%89%EF%BC%89%E5%A2%93%E5%BF%97%E9%93%AD%E5%B9%B6%E5%BA%8F/68066532",site:"百度百科"},
+"「天子駕六」車馬坑":{th:"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/20241215_Chariot_Pit_of_Luoyang_Wangcheng_08.jpg/120px-20241215_Chariot_Pit_of_Luoyang_Wangcheng_08.jpg",
+  src:"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/20241215_Chariot_Pit_of_Luoyang_Wangcheng_08.jpg/960px-20241215_Chariot_Pit_of_Luoyang_Wangcheng_08.jpg",
+  page:"https://commons.wikimedia.org/wiki/File:20241215_Chariot_Pit_of_Luoyang_Wangcheng_08.jpg",by:"Windmemories",lic:"CC BY-SA 4.0"}
 };
