@@ -43,6 +43,20 @@ function imageFigure(name){
   return `<figure class="pic"><img src="${im.src}" alt="${esc(name)}" onerror="this.parentNode.hidden=true">
     <figcaption>圖：${esc(im.by)} · ${im.lic} · <a href="${im.page}" target="_blank" rel="noopener">維基共享資源 ↗</a></figcaption></figure>`;
 }
+// 詳細介紹與影片（需載入 data/details.js）；沒有詳細介紹時沿用專題資料的短介紹
+const detailOf=name=>typeof DETAILS!=="undefined"&&DETAILS[name];
+function detailText(it){
+  const d=detailOf(it.name);
+  if(!d)return `<p>${esc(it.desc)}</p>`;
+  const refs=d.refs&&d.refs.length?`<div class="refs">參考資料：${d.refs.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("、")}</div>`:"";
+  return `<div class="long">${d.text.map(p=>`<p>${esc(p)}</p>`).join("")}</div>${refs}`;
+}
+function videoList(name){
+  const d=detailOf(name);
+  if(!d||!d.videos||!d.videos.length)return "";
+  return `<div class="vids"><h3>影片介紹</h3>${d.videos.map(([t,site,by,min,u,note])=>
+    `<div class="vid"><a href="${u}" target="_blank" rel="noopener">▶ ${esc(t)} ↗</a><span class="vmeta">${site} · ${esc(by)} · ${min} 分鐘</span><p>${esc(note)}</p></div>`).join("")}</div>`;
+}
 let detailList=[];
 // list 為上一件／下一件的順序；省略時沿用前一次的清單
 function openDetail(it,list){
@@ -55,10 +69,12 @@ function openDetail(it,list){
    <h2 id="dTitle">${esc(it.name)}</h2>
    ${imageFigure(it.name)}
    <dl><dt>年代</dt><dd>${esc(it.era)}</dd><dt>類別</dt><dd>${it.cat}</dd><dt>收藏單位</dt><dd>${mus}</dd></dl>
-   <p>${esc(it.desc)}</p>
+   ${detailText(it)}
    <div class="links"><a href="https://www.google.com/search?tbm=isch&q=${kw}" target="_blank" rel="noopener">查看圖片 ↗</a><a href="https://zh.wikipedia.org/w/index.php?search=${kw}" target="_blank" rel="noopener">維基百科 ↗</a></div>
+   ${videoList(it.name)}
    <div class="nav"><button id="dPrev" ${idx<=0?"disabled":""}>← 上一件</button><button id="dNext" ${idx<0||idx>=detailList.length-1?"disabled":""}>下一件 →</button></div>`;
   $("#scrim").hidden=false;
+  $("#card").scrollTop=0;
   $("#dClose").onclick=closeDetail;
   $("#dPrev").onclick=()=>idx>0&&openDetail(detailList[idx-1]);
   $("#dNext").onclick=()=>idx<detailList.length-1&&openDetail(detailList[idx+1]);
