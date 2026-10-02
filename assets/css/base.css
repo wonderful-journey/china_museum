@@ -246,5 +246,6 @@ a.seg:hover .band{background:var(--accent);color:var(--surface)}
 .totop:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.totop{transition:none}}
 
-/* 長清單效能：畫面外的區塊先不排版、不繪製（auto 會記住實際高度，跳轉位置不跑掉） */
-#tl > .panel,.dir .dgroup{content-visibility:auto;contain-intrinsic-size:auto 900px}
+/* 長清單效能：畫面外的區塊先不排版、不繪製（只估高度、不影響寬度；auto 會記住實際高度，跳轉位置不跑掉）
+   時間軸套在 .grid 而非 .panel，避免裁掉 .panel 外側的時間軸圓點 */
+#tl > .panel > .grid,.dir .dgroup{content-visibility:auto;contain-intrinsic-block-size:auto 900px}

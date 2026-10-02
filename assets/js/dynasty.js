@@ -40,10 +40,10 @@ function update(){
 
 // 畫面外的時期區塊不排版（content-visibility），先依第一個區塊的實際「每件高度」估算其他區塊高度，讓捲軸與跳轉位置接近實際
 function estimateHeights(){
-  const ps=[...document.querySelectorAll("#tl .panel[id]")];if(!ps.length)return;
-  const n=p=>p.querySelectorAll(".item").length,first=ps[0];
-  const per=(first.offsetHeight-60)/Math.max(1,n(first));
-  ps.forEach(p=>p.style.containIntrinsicSize="auto "+Math.round(60+per*n(p))+"px");
+  const gs=[...document.querySelectorAll("#tl .panel[id] > .grid")];if(!gs.length)return;
+  const n=g=>g.querySelectorAll(".item").length,first=gs[0];
+  const per=first.offsetHeight/Math.max(1,n(first));
+  gs.forEach(g=>g.style.containIntrinsicBlockSize="auto "+Math.round(per*n(g))+"px");
 }
 // 跳到某時期：區塊在途中才排版會讓位置偏移，捲動結束後再校正幾次
 function jumpTo(s,smooth){
