@@ -32,7 +32,9 @@ function renderChips(){
 }
 $("#prov").innerHTML=`<option value="">全部省份</option>`+PROVS.map(p=>`<option${p===state.prov?" selected":""}>${p}</option>`).join("");
 $("#prov").addEventListener("change",e=>{state.prov=e.target.value||null;update();});
-$("#q").addEventListener("input",e=>{state.q=e.target.value;update();});
+// 搜尋停頓後才更新，避免每打一個字就重排整個清單
+let qTimer;
+$("#q").addEventListener("input",e=>{clearTimeout(qTimer);qTimer=setTimeout(()=>{state.q=e.target.value;update();},200);});
 document.addEventListener("click",e=>{
   const k=e.target.closest("[data-k]");
   if(k){state.kind=k.dataset.k||null;update();return;}
@@ -54,8 +56,20 @@ function update(){
   const groups=Object.entries(o).sort(([a,x],[b,y])=>PROVS.indexOf(MUSEUMS[a].p)-PROVS.indexOf(MUSEUMS[b].p)
     ||hasTr.has(b)-hasTr.has(a)||lvRank(a)-lvRank(b)||y.length-x.length);
   curList=groups.flatMap(([,a])=>[...a.filter(it=>kindOf(it)==="tr"),...a.filter(it=>kindOf(it)==="cl")]);
-  $("#tlist").innerHTML=groups.length?`<div class="tgrid">${groups.map(museumCard).join("")}</div>`
+  pending=groups;
+  $("#tlist").innerHTML=groups.length?`<div class="tgrid"></div><div class="more" aria-hidden="true"></div>`
     :`<div class="empty">沒有符合條件的文物。試試清除搜尋字或切換種類、類別、省份。</div>`;
+  if(groups.length){renderMore();io.observe($("#tlist .more"));}
 }
+// 卡片分批產生：先畫一批，捲到清單底部附近再接著畫，避免一次排版四百多張卡片
+const BATCH_N=24;let pending=[];
+function renderMore(){
+  const grid=$("#tlist .tgrid");if(!grid||!pending.length)return;
+  grid.insertAdjacentHTML("beforeend",pending.splice(0,BATCH_N).map(museumCard).join(""));
+  if(!pending.length){io.disconnect();return;}
+  // 觀察器只在進出視野時觸發；畫完一批後底部若仍在預載範圍內就繼續畫
+  const s=$("#tlist .more");if(s&&s.getBoundingClientRect().top<innerHeight+1200)requestAnimationFrame(renderMore);
+}
+const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))renderMore();},{rootMargin:"1200px 0px"});
 update();
 })();

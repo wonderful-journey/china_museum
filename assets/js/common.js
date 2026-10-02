@@ -22,6 +22,17 @@ const SECTIONS=[
     <div class="navlinks">${links.map(l=>`<a href="${l.href}"${l.key===active?' aria-current="page"':""}>${l.nav||l.t}</a>`).join("")}</div>`;
 })();
 
+// 返回最上方按鈕：捲動超過一個畫面高度才出現
+(function(){
+  const b=document.createElement("button");
+  b.className="totop";b.type="button";b.setAttribute("aria-label","返回最上方");b.title="返回最上方";
+  b.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 5l-7 7m7-7l7 7M12 5v14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  b.addEventListener("click",()=>window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}));
+  document.body.appendChild(b);
+  const sync=()=>b.classList.toggle("show",scrollY>innerHeight);
+  addEventListener("scroll",sync,{passive:true});sync();
+})();
+
 // 文物清單列與詳情卡（頁面需有 #scrim > #card）；extra 為附加在年代、類別後的說明（如收藏單位）
 function itemRow(it,extra){return `<button class="item" data-i="${it.id}">${imageThumb(it.name)}<span class="tag ${it.cls}"><b>${it.tagB}</b>${it.tagN}</span><span><span class="nm">${esc(it.name)}</span><br><span class="meta">${esc(it.era)} · ${it.cat}${typeof extra==="string"&&extra?" · "+esc(extra):""}</span></span></button>`;}
 // 文物圖片（需載入 data/images.js）；無圖或載入失敗時不顯示

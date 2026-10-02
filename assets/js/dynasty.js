@@ -33,8 +33,26 @@ function update(){
     <span class="n">${a.length}</span><span class="b" style="height:${a.length/max*120}px"></span><span class="l">${p.s}</span></button>`).join("");
   $("#tl").innerHTML=groups.filter(g=>g[1].length).map(([p,a])=>`<section class="panel" id="p-${p.key}"><h2>${p.t}<span>${p.y} · ${a.length} 件</span></h2><div class="grid">${a.map(itemRow).join("")}</div></section>`).join("")
     ||`<div class="panel"><div class="empty">沒有符合條件的文物。試試清除搜尋字或切換類別。</div></div>`;
+  estimateHeights();
   $("#pjump").innerHTML=groups.map(([p,a])=>`<button class="chip" data-per="${p.key}" title="${p.t} ${p.y}"${a.length?"":" disabled"}>${p.s}<small>${a.length}</small></button>`).join("");
   spy();
+}
+
+// 畫面外的時期區塊不排版（content-visibility），先依第一個區塊的實際「每件高度」估算其他區塊高度，讓捲軸與跳轉位置接近實際
+function estimateHeights(){
+  const ps=[...document.querySelectorAll("#tl .panel[id]")];if(!ps.length)return;
+  const n=p=>p.querySelectorAll(".item").length,first=ps[0];
+  const per=(first.offsetHeight-60)/Math.max(1,n(first));
+  ps.forEach(p=>p.style.containIntrinsicSize="auto "+Math.round(60+per*n(p))+"px");
+}
+// 跳到某時期：區塊在途中才排版會讓位置偏移，捲動結束後再校正幾次
+function jumpTo(s,smooth){
+  const fix=(k=0)=>{const off=s.getBoundingClientRect().top-parseFloat(getComputedStyle(s).scrollMarginTop||0);
+    if(Math.abs(off)>4&&k<6){s.scrollIntoView();requestAnimationFrame(()=>fix(k+1));}};
+  if(smooth){s.scrollIntoView({behavior:"smooth"});
+    // 不支援 scrollend 的瀏覽器改用計時校正
+    if("onscrollend" in window)addEventListener("scrollend",()=>fix(),{once:true});else setTimeout(fix,900);}
+  else{s.scrollIntoView();requestAnimationFrame(()=>fix());}
 }
 
 // 朝代快選：依捲動位置標示目前所在時期，並讓該按鈕保持在快選列可視範圍內
@@ -60,7 +78,7 @@ document.addEventListener("click",e=>{
   if(c){state.cat=c.dataset.c||null;update();return;}
   const b=e.target.closest("[data-per]");
   if(b){const s=$("#p-"+b.dataset.per);
-    if(s)s.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});return;}
+    if(s)jumpTo(s,!matchMedia("(prefers-reduced-motion: reduce)").matches);return;}
   const it=e.target.closest("[data-i]");
   if(it)openDetail(ITEM_INDEX[it.dataset.i],curList);
 });
@@ -69,5 +87,5 @@ $("#q").addEventListener("input",e=>{state.q=e.target.value;update();});
 syncBarH();
 update();
 // 從首頁時間軸連入（#p-tang 等）時捲到該時期；時期區塊是程式產生的，瀏覽器不會自動捲動
-if(/^#p-\w+$/.test(location.hash)){const s=$(location.hash);if(s)s.scrollIntoView();}
+if(/^#p-\w+$/.test(location.hash)){const s=$(location.hash);if(s)jumpTo(s,false);}
 })();
