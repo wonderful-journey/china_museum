@@ -2483,5 +2483,51 @@ const DETAILS = {
     "畫中伏羲與女媧上身相擁、側面相望，下身是相互纏繞的蛇尾；伏羲手持矩、女媧手持規，頭頂有太陽，尾下有月亮，四周繪滿星辰。伏羲、女媧是傳說中創造人類的始祖，此類畫像多覆蓋在墓頂或棺上，象徵陰陽相合、生生不息，反映了中原神話在西域的流傳。"
   ],
   refs:[["百度百科：伏羲女娲图","https://baike.baidu.com/item/%E4%BC%8F%E7%BE%B2%E5%A5%B3%E5%A8%B2%E5%9B%BE"]],
-  videos:[]}
+  videos:[]},
+// 館藏精選影片（第三輪：Bilibili 館方帳號與官方媒體）
+"趙王陵青銅馬":{
+  videos:[
+    ["【雲講國寶】邯鄲國寶·戰國青銅馬","Bilibili","邯鄲市博物館",6,"https://www.bilibili.com/video/BV1kg4y1v793/","邯鄲市博物館官方帳號的館藏講解，介紹趙王陵出土的戰國青銅馬。"]
+  ]},
+"「蜀西工」造金銀塗乘輿大爵酒樽":{
+  videos:[
+    ["【雲講國寶】邯鄲國寶·蜀郡西工造乘輿大爵酒樽","Bilibili","邯鄲市博物館",5,"https://www.bilibili.com/video/BV1PV41167qB/","邯鄲市博物館官方帳號的館藏講解。"]
+  ]},
+"榮憲公主珍珠團龍袍":{
+  videos:[
+    ["赤峰博物館——珍珠團龍袍","Bilibili","赤峰博物館",6,"https://www.bilibili.com/video/BV1wA411i7f9/","赤峰博物館官方帳號介紹館藏的榮憲公主珍珠團龍袍。"]
+  ]},
+"中統元寶交鈔":{
+  videos:[
+    ["【絲路百館百物】呼和浩特市博物館「中統元寶交鈔」","Bilibili","中國絲綢博物館",3,"https://www.bilibili.com/video/BV1zt4y1Q7Xe/","中國絲綢博物館「絲路百館百物」系列，介紹呼和浩特博物院藏的元代紙幣。"]
+  ]},
+"臨淄戰國大琉璃珠":{
+  videos:[
+    ["【雲講國寶】千年遺珍——戰國琉璃珠","Bilibili","淄博市陶瓷博物館",4,"https://www.bilibili.com/video/BV11p4y1D7xV/","淄博市陶瓷博物館官方帳號的館藏講解。"]
+  ]},
+"秦嶧山刻石":{
+  videos:[
+    ["鄒城——秦嶧山刻石","Bilibili","鄒城博物館",3,"https://www.bilibili.com/video/BV11pGwzbEMe/","鄒城博物館官方帳號介紹館藏的嶧山刻石。"]
+  ]},
+"高柄鏤孔蛋殼黑陶杯":{
+  videos:[
+    ["日照市博物館的鎮館之寶——蛋殼黑陶鏤孔高柄杯","Bilibili","文旅日照",1,"https://www.bilibili.com/video/BV1BQ4y1E7fK/","日照市文旅官方帳號的短片。"]
+  ]},
+"雲雷紋柳葉形青銅矛":{
+  videos:[
+    ["樟樹博物館趣讀文物系列——商代柳葉形雲雷紋青銅矛","Bilibili","樟樹市博物館",1,"https://www.bilibili.com/video/BV1dP411Y77q/","樟樹市博物館官方帳號的館藏介紹短片。"]
+  ]},
+"定鼎門遺址駱駝蹄印":{
+  videos:[
+    ["你敢信，這是1300多年前的駱駝蹄印？","Bilibili","洛陽融媒",1,"https://www.bilibili.com/video/BV1Xp4y1m7Nd/","洛陽官方媒體介紹定鼎門遺址路面上保存的唐代駱駝蹄印。"]
+  ]},
+"永陵二十四伎樂石刻":{
+  videos:[
+    ["【永陵文物說】二十四伎樂·擊拍板樂伎","Bilibili","成都永陵博物館",1,"https://www.bilibili.com/video/BV1bqWHehEDz/","成都永陵博物館官方帳號的館藏講解。"],
+    ["【永陵文物說】二十四伎樂·擊雞婁鼓搖鞉牢樂伎","Bilibili","成都永陵博物館",2,"https://www.bilibili.com/video/BV1aJ4m177sc/","成都永陵博物館官方帳號的館藏講解。"]
+  ]},
+"隆福寺藻井":{
+  videos:[
+    ["隆福寺藻井裡的「星河」到底有多美？","Bilibili","北京日報",1,"https://www.bilibili.com/video/BV17a4y1W7JR/","北京日報報導北京古代建築博物館太歲殿內的明代隆福寺藻井與星象圖。"]
+  ]}
 };
